@@ -3,7 +3,9 @@ const videoElement = document.getElementsByClassName("vid2")[0];
 const canvasElement = document.getElementsByClassName("output_dance")[0];
 const canvasCtx = canvasElement.getContext("2d");
 
-let intervalId;
+const fpsControl2 = new FPS();
+
+let intervalId =-1;
 function zColor(data) {
   const z = clamp(data.from.z + 0.5, 0, 1);
   return `rgba(0, ${255 * z}, ${255 * (1 - z)}, 1)`;
@@ -48,12 +50,6 @@ function onResultsPose2(results) {
     { color: zColor, fillColor: "#AAAAAA" }
   );
 }
-
-
-videoElement.addEventListener("loadedmetadata", () => {
-  canvasElement.width = videoElement.videoWidth;
-  canvasElement.height = videoElement.videoHeight;
-});
 
 videoElement.addEventListener("play", () => {
   startDrawing();

@@ -73,7 +73,7 @@ pose2.onResults(onResultsPose2);
 function startDrawing() {
   clearInterval(intervalId);
 
-  const captureInterval = 150;
+  const captureInterval = 300;
   intervalId = setInterval(() => {
     pose2.send({image: videoElement});
   }, captureInterval);
