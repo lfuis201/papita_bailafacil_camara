@@ -146,5 +146,42 @@ input[type="range"] {
   .loading button {
     margin-top: 10px; /* Ajusta el espacio entre el spinner y el botón según sea necesario */
   }
+
+  .loading-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco transparente */
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+  }  
+
+  /* Puedes agregar este CSS en tu archivo de estilos o en línea */
+.modal {
+    display: none;
+  }
   
+  .modal.is-active {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-background {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .modal-content {
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  .box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+  }
   

@@ -3,13 +3,6 @@ const canvasElement = document.getElementsByClassName("canvas2")[0];
 const canvasCtx = canvasElement.getContext("2d");
 const controlsElement5 = document.getElementsByClassName("control5")[0];
 
-const porcentajeSimilitudElement = document.getElementById('porcentajeSimilitud');
-
-
-let totalSimilitud = 0;
-let contadorEventos = 0;
-
-let porcentajefinal = 0;
 
 const fpsControl2 = new FPS();
 
@@ -33,27 +26,12 @@ function handleLandmarksUpdate(event) {
     const porcentajeRedondeado = porcentajeSimilitud.toFixed(2);
     //console.log(`Porcentaje de similitud: ${porcentajeSimilitud}%`);
     porcentajeSimilitudElement.textContent = `${porcentajeRedondeado}%`;
-    porcentajefinal=porcentajeRedondeado
-    // Verifica si el video ha terminado y muestra el modalç
-    
-   
+
+
   }
   
 }
 
-
-function mostrarModal(porcentaje) {
-  const modal = document.getElementById('myModal');
-  const modalContent = document.getElementById('modalContent');
-
-  modalContent.textContent = `Porcentaje total de similitud: ${porcentaje}%`;
-  modal.classList.add('is-active');
-}
-
-function cerrarModal() {
-  const modal = document.getElementById('myModal');
-  modal.classList.remove('is-active');
-}
 let poseLandmarksGlobal2 = null;
 
 const landmarksUpdateEvent2 = new Event('landmarksUpdate2');
@@ -135,7 +113,7 @@ async function onFrame() {
 }
 
 // must be same domain otherwise it will taint the canvas! 
-videoElement.src = "./bachata1.mp4"; 
+videoElement.src = "./Paso1_Television_nombres.mp4"; 
 videoElement.onloadeddata = (evt) => {
   let video = evt.target;
 

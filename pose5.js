@@ -4,6 +4,9 @@ const controlsElement4 = document.getElementsByClassName("control4")[0];
 const canvasCtx5 = out5.getContext("2d");
 const bodyElement = document.body;
 
+const porcentajeSimilitudElement = document.getElementById('porcentajeSimilitud');
+
+
 const myVideo = document.getElementById("myVideo");
 
 const fpsControl = new FPS();
@@ -51,59 +54,30 @@ const landmarksUpdateEvent = new Event('landmarksUpdate');
 
 // Función que se ejecutará cada vez que los landmarks se actualicen
 function handleLandmarksUpdate(event) {
- // Accede al nuevo valor de landmarks en el detalle del evento
- const detalle = event.detail;
+  // Accede al nuevo valor de landmarks en el detalle del evento
+  const detalle = event.detail;
 
- // Determina qué variable global actualizar según el tipo de evento
- if (event.type === 'landmarksUpdate') {
-   poseLandmarksGlobal = detalle;
- } else if (event.type === 'landmarksUpdate2') {
-   poseLandmarksGlobal2 = detalle;
- }
+  // Determina qué variable global actualizar según el tipo de evento
+  if (event.type === 'landmarksUpdate') {
+    poseLandmarksGlobal = detalle;
+    //console.log("tilin");
+  } else if (event.type === 'landmarksUpdate2') {
+    poseLandmarksGlobal2 = detalle;
+    //console.log("tilin2");
+  }
 
- // Calcula la distancia euclidiana entre los landmarks
- if (poseLandmarksGlobal && poseLandmarksGlobal2) {
-   const similitud = calcularSimilitudNormalizada(poseLandmarksGlobal, poseLandmarksGlobal2);
-   const porcentajeSimilitud = similitud * 100;
-   totalSimilitud += porcentajeSimilitud;
-   contadorEventos++;
+  // Calcula la distancia euclidiana entre los landmarks
+  if (poseLandmarksGlobal && poseLandmarksGlobal2) {
+    const similitud = calcularSimilitudNormalizada(poseLandmarksGlobal, poseLandmarksGlobal2);
+    const porcentajeSimilitud = similitud * 100;
+    const porcentajeRedondeado = porcentajeSimilitud.toFixed(2);
+    //console.log(`Porcentaje de similitud: ${porcentajeSimilitud}%`);
+    porcentajeSimilitudElement.textContent = `${porcentajeRedondeado}%`;
 
-   const mediaPorcentajeSimilitud = totalSimilitud / contadorEventos;
-   const mediaPorcentajeRedondeado = mediaPorcentajeSimilitud.toFixed(2);
 
-   // Muestra la media de los porcentajes al final
-   //console.log(`Media de porcentaje de similitud: ${mediaPorcentajeRedondeado}%`);
-
-   // Verifica si el video ha terminado y muestra el modal
-   // Verifica si el video ha terminado y muestra el modal
-   const video = document.getElementById('myVideo');
-   if (video.ended) {
-     mostrarModal(porcentajefinal);
-   }
-   
- }
+  }
   
 }
-
-
-function mostrarModal(porcentaje) {
-  const modalContent = document.getElementById('modalContent');
-  modalContent.textContent = `Porcentaje total de similitud: ${porcentaje}%`;
-
-  // Muestra el modal usando Bootstrap
-  $('#myModal').modal('show');
-}
-function cerrarModal() {
-  // Cierra el modal usando Bootstrap
-  $('#myModal').modal('hide');
-}
-
-// Puedes restablecer el contador y el total en cualquier momento, por ejemplo:
-function reiniciarContadores() {
-  totalSimilitud = 0;
-  contadorEventos = 0;
-}
-
 
 // Función que se ejecutará cada vez que los landmarks se actualicen
 
@@ -113,7 +87,6 @@ document.addEventListener('landmarksUpdate', handleLandmarksUpdate);
 
 
 function checkFullBodyDetected(results) {
-  let cuerpo = null;
   const poseLandmarks = results.poseLandmarks;
 
   // Verificar si la visibilidad es mayor a 0.9 para todos los landmarks
@@ -122,14 +95,12 @@ function checkFullBodyDetected(results) {
   );
 
   if (todosLosLandmarksDetectados) {
+    console.log("Cuerpo completo detectado");
     // Agrega lógica adicional aquí si es necesario
-    cuerpo=true;
   } else {
+    console.log("No se detecta el cuerpo completo");
     // Agrega lógica adicional aquí si es necesario
-    cuerpo=false;
   }
-  // Retornar la variable cuerpo
-  return cuerpo;
 }
 
 function zColor(data) {
@@ -228,15 +199,7 @@ function onResultsPose(results) {
 
   }
 
-  const cuerpoDetectado = checkFullBodyDetected(results);
-
-  // Mostrar "Cargando" si cuerpoDetectado es false
-  const loadingMessage = document.querySelector('.loading-message');
-  if (!cuerpoDetectado) {
-    loadingMessage.style.display = 'block';
-  } else {
-    loadingMessage.style.display = 'none';
-  }
+  checkFullBodyDetected(results);
 
 
   poseLandmarksGlobal = results.poseLandmarks;
